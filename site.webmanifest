@@ -1,0 +1,23 @@
+{
+  "name": "Calculadora de Café",
+  "short_name": "Cafe Ratio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fef9ef",
+  "theme_color": "#E5810E",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "favicon-v60.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-app.png",
+      "sizes": "676x676",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

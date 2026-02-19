@@ -5,42 +5,129 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <title>Calculadora de Café | Ratio por Método y Tazas</title>
-  <meta name="description" content="Calcula cuántos gramos de café y mililitros de agua usar según método de preparación, número de tazas y nivel de intensidad." />
-  <meta name="keywords" content="calculadora de café, ratio café agua, aeropress, chemex, v60, prensa francesa, moka italiana, cold brew, gramos de café por taza" />
+  <title>Calculadora de Café Gratis | Ratio Café Agua por Método</title>
+  <meta name="description" content="Calcula gramos de café y agua por método (AeroPress, Chemex, V60, Prensa Francesa, Moka italiana y Cold Brew), número de tazas e intensidad en segundos." />
+  <meta name="keywords" content="calculadora de café, ratio café agua, gramos de café por taza, v60, aeropress, chemex, moka italiana, prensa francesa, cold brew" />
   <meta name="author" content="Calculadora de Café" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <meta name="theme-color" content="#E5810E" />
-  <link rel="icon" type="image/svg+xml" href="favicon-v60.svg" />
   <meta name="application-name" content="Calculadora de Café" />
-  <link rel="canonical" href="https://demo-cafe-calculadora.example/" />
+  <meta name="apple-mobile-web-app-title" content="Calculadora de Café" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="icon" type="image/svg+xml" href="favicon-v60.svg" />
+  <link rel="icon" type="image/png" href="favicon-app.png" />
+  <link rel="apple-touch-icon" href="favicon-app.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="canonical" href="https://calculadora-cafe-hazel.vercel.app/" />
+  <link rel="alternate" hreflang="es" href="https://calculadora-cafe-hazel.vercel.app/" />
+  <link rel="alternate" hreflang="es-419" href="https://calculadora-cafe-hazel.vercel.app/" />
+  <link rel="alternate" hreflang="x-default" href="https://calculadora-cafe-hazel.vercel.app/" />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
 
   <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_ES" />
-  <meta property="og:url" content="https://demo-cafe-calculadora.example/" />
-  <meta property="og:title" content="Calculadora de Café | Ratio por Método y Tazas" />
-  <meta property="og:description" content="Obtén la proporción ideal de café y agua para AeroPress, Chemex, V60, Prensa, Moka y Cold Brew." />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:url" content="https://calculadora-cafe-hazel.vercel.app/" />
+  <meta property="og:title" content="Calculadora de Café Gratis: gramos y agua por método" />
+  <meta property="og:description" content="Receta instantánea por método, tazas e intensidad con proporción y molienda sugerida." />
   <meta property="og:site_name" content="Calculadora de Café" />
-  <meta property="og:image" content="https://demo-cafe-calculadora.example/og-image-cafe.svg" />
+  <meta property="og:image" content="https://calculadora-cafe-hazel.vercel.app/favicon-app.png" />
+  <meta property="og:image:secure_url" content="https://calculadora-cafe-hazel.vercel.app/favicon-app.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="676" />
+  <meta property="og:image:height" content="676" />
+  <meta property="og:image:alt" content="Logo de Calculadora de Café" />
 
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Calculadora de Café | Ratio por Método y Tazas" />
-  <meta name="twitter:description" content="Calcula gramos de café y mililitros de agua según método, tazas e intensidad." />
-  <meta name="twitter:image" content="https://demo-cafe-calculadora.example/og-image-cafe.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="https://calculadora-cafe-hazel.vercel.app/" />
+  <meta name="twitter:title" content="Calculadora de Café Gratis: gramos y agua por método" />
+  <meta name="twitter:description" content="Calcula tu receta por método, tazas e intensidad con proporción y molienda sugerida." />
+  <meta name="twitter:image" content="https://calculadora-cafe-hazel.vercel.app/favicon-app.png" />
+  <meta name="twitter:image:alt" content="Logo de Calculadora de Café" />
 
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Calculadora de Café",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "Any",
-      "inLanguage": "es",
-      "description": "Herramienta para calcular el ratio café-agua por método, número de tazas e intensidad.",
-      "featureList": [
-        "Selección de método: AeroPress, Chemex, V60, Prensa, Moka y Cold Brew",
-        "Ajuste de intensidad del café",
-        "Cálculo de gramos de café y mililitros de agua"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://calculadora-cafe-hazel.vercel.app/#website",
+          "url": "https://calculadora-cafe-hazel.vercel.app/",
+          "name": "Calculadora de Café",
+          "description": "Calculadora para estimar gramos de café y agua por método, tazas e intensidad.",
+          "inLanguage": "es"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://calculadora-cafe-hazel.vercel.app/#webpage",
+          "url": "https://calculadora-cafe-hazel.vercel.app/",
+          "name": "Calculadora de Café Gratis | Ratio Café Agua por Método",
+          "isPartOf": {
+            "@id": "https://calculadora-cafe-hazel.vercel.app/#website"
+          },
+          "about": {
+            "@id": "https://calculadora-cafe-hazel.vercel.app/#app"
+          },
+          "inLanguage": "es",
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://calculadora-cafe-hazel.vercel.app/favicon-app.png"
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://calculadora-cafe-hazel.vercel.app/#app",
+          "name": "Calculadora de Café",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Any",
+          "inLanguage": "es",
+          "url": "https://calculadora-cafe-hazel.vercel.app/",
+          "image": "https://calculadora-cafe-hazel.vercel.app/favicon-app.png",
+          "isAccessibleForFree": true,
+          "description": "Herramienta para calcular el ratio café-agua por método, número de tazas e intensidad.",
+          "featureList": [
+            "Selección de método: AeroPress, Chemex, V60, Prensa francesa, Moka italiana y Cold Brew",
+            "Ajuste de intensidad del café",
+            "Cálculo de gramos de café y mililitros de agua",
+            "Recomendación de molienda por método"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://calculadora-cafe-hazel.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Cómo se calcula la receta?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "La calculadora toma el volumen por taza del método y aplica la proporción ajustada por intensidad para estimar agua y café."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Se puede personalizar la proporción?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí. En modo avanzado puedes modificar la proporción base de cada método y se guardará en tu dispositivo."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Por qué se sugiere un tipo de molienda?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "El tamaño de molienda afecta la extracción. Por eso mostramos una sugerencia específica según el método elegido."
+              }
+            }
+          ]
+        }
       ]
     }
   </script>
@@ -51,23 +138,23 @@
   <div class="bg-orb orb-2" aria-hidden="true"></div>
   <div class="bg-orb orb-3" aria-hidden="true"></div>
 
-  <main id="maindiv">
+  <main id="maindiv" aria-labelledby="pageTitle">
     <header class="glass hero">
       <div class="hero-top">
         <div class="logo-shell">
-          <img src="logoadonay.svg" alt="Logo Adonay" class="hero-logo" />
+          <img src="logoadonay.svg" alt="Logo de Adonay Coffee" class="hero-logo" width="601" height="178" decoding="async" fetchpriority="high" />
         </div>
         <div class="hero-content">
           <p class="eyebrow">Coffee Ratio Studio</p>
-          <h1>Calculadora de Café</h1>
-          <p class="hero-text">Define método, cantidad y fuerza. Obtén una receta equilibrada.</p>
+          <h1 id="pageTitle">Calculadora de Café</h1>
+          <p class="hero-text">Elige método, tazas e intensidad. Obtén una receta equilibrada al instante.</p>
           <p class="current-method">Método actual: <strong id="currentMethod">AeroPress</strong></p>
         </div>
       </div>
     </header>
 
-    <section class="glass section1">
-      <h2 class="section-title">Tipo de cafetera</h2>
+    <section class="glass section1" aria-labelledby="methodsTitle">
+      <h2 class="section-title" id="methodsTitle">Método de preparación</h2>
       <ul id="methods" class="methods-grid" role="listbox" aria-label="Selecciona método de preparación">
         <li class="brewingelements" data-method="aeropress" role="option" tabindex="0" aria-selected="false">
           <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -138,11 +225,11 @@
           <span>Cold Brew</span>
         </li>
       </ul>
-      <p class="hint">Selecciona un método para activar la receta base.</p>
+      <p class="hint">Selecciona un método para cargar su receta base.</p>
     </section>
 
-    <section class="glass section1">
-      <h2 class="section-title">Número de tazas</h2>
+    <section class="glass section1" aria-labelledby="cupsTitle">
+      <h2 class="section-title" id="cupsTitle">Número de tazas</h2>
       <div class="row cups-row">
         <label for="cups" class="control-label">Tazas</label>
         <input id="cups" type="range" min="1" max="12" step="1" value="1" aria-describedby="cupsHelp" />
@@ -157,11 +244,11 @@
           </svg>
         </div>
       </div>
-      <p class="hint" id="cupsHelp">El volumen por taza cambia automáticamente según el método elegido.</p>
+      <p class="hint" id="cupsHelp">El volumen por taza se ajusta automáticamente según el método.</p>
     </section>
 
-    <section class="glass section1">
-      <h2 class="section-title">Intensidad y unidades</h2>
+    <section class="glass section1" aria-labelledby="intensityTitle">
+      <h2 class="section-title" id="intensityTitle">Intensidad y unidad</h2>
       <div class="row controls-row">
         <div class="control-group">
           <label for="strength" class="control-label">Intensidad</label>
@@ -181,15 +268,15 @@
             <option value="oz">Onzas (oz)</option>
           </select>
         </div>
-        <span class="pill" id="ratioPreview" aria-live="polite">Ratio: -</span>
+        <span class="pill" id="ratioPreview" aria-live="polite">Proporción: -</span>
       </div>
-      <p class="hint">A más intensidad, menor ratio y mayor cantidad de café.</p>
+      <p class="hint">Más intensidad = más café y una proporción más cerrada.</p>
     </section>
 
-    <section class="glass section1">
+    <section class="glass section1" aria-labelledby="advancedTitle">
       <div class="advanced-header">
-        <h2 class="section-title">Modo avanzado</h2>
-        <button class="text-btn" id="toggleAdvanced" type="button" aria-expanded="false" aria-controls="advancedPanel">Editar ratios base</button>
+        <h2 class="section-title" id="advancedTitle">Modo avanzado</h2>
+        <button class="text-btn" id="toggleAdvanced" type="button" aria-expanded="false" aria-controls="advancedPanel">Editar proporciones base</button>
       </div>
       <div id="advancedPanel" class="advanced-panel" hidden>
         <div class="advanced-grid">
@@ -201,13 +288,14 @@
           <label>Cold Brew <input type="number" min="4" max="25" step="0.1" data-ratio-method="coldbrew" /></label>
         </div>
       </div>
-      <p class="hint">Puedes ajustar el ratio base por método y se guarda localmente.</p>
+      <p class="hint">Personaliza la proporción por método. Se guarda en este dispositivo.</p>
     </section>
 
-    <section class="glass section1 results-panel" id="resultsPanel">
+    <section class="glass section1 results-panel" id="resultsPanel" aria-labelledby="resultsTitle">
+      <h2 class="section-title" id="resultsTitle">Tu receta</h2>
       <div class="actions-row">
         <button class="btn btn-secondary" id="copyRecipe" type="button">Copiar receta</button>
-        <button class="btn btn-secondary" id="reset" type="button">Restablecer</button>
+        <button class="btn btn-secondary" id="reset" type="button">Restablecer ajustes</button>
       </div>
 
       <p id="errorMsg" class="error" aria-live="polite"></p>
@@ -227,9 +315,56 @@
       <p class="hint" id="grindHint" aria-live="polite"></p>
       <p class="hint" id="methodHint" aria-live="polite"></p>
 
-      <h3 class="steps-title">Guía rápida</h3>
+      <h3 class="steps-title">Pasos sugeridos</h3>
       <ol class="steps" id="brewSteps"></ol>
     </section>
+
+    <section class="glass section1" id="faqSection" aria-labelledby="faqTitle">
+      <h2 class="section-title" id="faqTitle">Preguntas frecuentes</h2>
+      <details>
+        <summary>¿Cómo se calcula la receta?</summary>
+        <p class="hint">La calculadora toma el volumen por taza del método y aplica la proporción ajustada por intensidad para estimar agua y café.</p>
+      </details>
+      <details>
+        <summary>¿Se puede personalizar la proporción?</summary>
+        <p class="hint">Sí. En Modo avanzado puedes modificar la proporción base de cada método y se guardará en tu dispositivo.</p>
+      </details>
+      <details>
+        <summary>¿Por qué se sugiere un tipo de molienda?</summary>
+        <p class="hint">El tamaño de molienda afecta la extracción. Por eso mostramos una sugerencia específica según el método elegido.</p>
+      </details>
+    </section>
+
+    <section class="glass section1" aria-labelledby="useGuideTitle">
+      <h2 class="section-title" id="useGuideTitle">Cómo usar esta calculadora de café</h2>
+      <ol class="steps seo-steps">
+        <li>Selecciona el método de preparación que vas a usar.</li>
+        <li>Elige el número de tazas que quieres preparar.</li>
+        <li>Ajusta la intensidad para definir una proporción más suave o más fuerte.</li>
+        <li>Revisa gramos de café, agua total y molienda sugerida en tiempo real.</li>
+      </ol>
+      <p class="hint">Puedes cambiar unidades a onzas y personalizar proporciones base en el modo avanzado.</p>
+    </section>
+
+    <section class="glass section1" aria-labelledby="methodRefTitle">
+      <h2 class="section-title" id="methodRefTitle">Métodos, proporciones y molienda sugerida</h2>
+      <ul class="seo-method-list">
+        <li><strong>AeroPress:</strong> proporción 1:15 a 1:17, molienda media-fina.</li>
+        <li><strong>Chemex:</strong> proporción 1:15 a 1:17, molienda media-gruesa.</li>
+        <li><strong>V60:</strong> proporción 1:16 a 1:18, molienda media-fina.</li>
+        <li><strong>Prensa francesa:</strong> proporción 1:12 a 1:15, molienda gruesa.</li>
+        <li><strong>Moka italiana:</strong> proporción 1:8 a 1:12, molienda fina-media.</li>
+        <li><strong>Cold Brew:</strong> proporción 1:4 a 1:8, molienda gruesa.</li>
+      </ul>
+      <p class="hint">Estas proporciones son punto de partida y pueden variar según tu café, tu agua y tu preferencia de sabor.</p>
+    </section>
+
+    <noscript>
+      <section class="glass section1 noscript-panel" aria-labelledby="noscriptTitle">
+        <h2 class="section-title" id="noscriptTitle">Activa JavaScript para usar la calculadora</h2>
+        <p class="hint">La herramienta necesita JavaScript para actualizar en tiempo real los gramos de café, agua y pasos de preparación.</p>
+      </section>
+    </noscript>
   </main>
 
   <aside class="quick-summary" id="quickSummary" aria-live="polite">
@@ -237,7 +372,7 @@
       <p><strong>Café</strong> <span id="stickyCoffee">-</span> g</p>
       <p><strong>Agua</strong> <span id="stickyWater">-</span> <span id="stickyWaterUnit">ml</span></p>
     </div>
-    <button class="quick-summary-btn" id="jumpToResults" type="button">Ver detalle</button>
+    <button class="quick-summary-btn" id="jumpToResults" type="button">Ver receta</button>
   </aside>
 
   <script type="module" src="script.js"></script>

@@ -391,6 +391,14 @@ input[type="number"] {
   font-weight: 600;
 }
 
+.error.is-error {
+  color: #9a2a21;
+}
+
+.error.is-success {
+  color: #2f7a32;
+}
+
 .results-panel .results {
   margin-top: 0.86rem;
   display: grid;
@@ -458,6 +466,24 @@ input[type="number"] {
 
 .steps li {
   margin: 0.35rem 0;
+}
+
+.seo-steps {
+  margin-top: 0.25rem;
+}
+
+.seo-method-list {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  color: #5a4129;
+}
+
+.seo-method-list li {
+  margin: 0.34rem 0;
+}
+
+.noscript-panel {
+  border-style: dashed;
 }
 
 .quick-summary {

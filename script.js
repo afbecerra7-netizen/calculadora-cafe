@@ -28,8 +28,8 @@ const grindRecommendations = {
 };
 
 const methodHints = {
-  coldbrew: "Cold Brew se calcula en modo concentrado; diluye 1:2 o 1:3 al servir.",
-  moka: "En Moka italiana no compactes el café y retira del fuego al final del burbujeo."
+  coldbrew: "Cold Brew: esta receta queda concentrada. Puedes diluir 1:2 o 1:3 al servir.",
+  moka: "Moka italiana: no compactes el café y retira del fuego al final del burbujeo."
 };
 
 const brewGuides = {
@@ -105,7 +105,9 @@ const toggleAdvancedBtn = document.getElementById("toggleAdvanced");
 const advancedPanelEl = document.getElementById("advancedPanel");
 const ratioInputs = document.querySelectorAll("[data-ratio-method]");
 
-function showError(message = "") {
+function showNotice(message = "", type = "error") {
+  errorMsgEl.classList.toggle("is-success", type === "success");
+  errorMsgEl.classList.toggle("is-error", type === "error");
   errorMsgEl.textContent = message;
 }
 
@@ -218,7 +220,12 @@ function updateRatioPreview() {
   const strength = parseFloat(strengthEl.value);
   const { min, max } = getBounds(selectedMethod);
   const r = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
-  ratioPreviewEl.textContent = `Ratio: 1:${roundTo(r, 1)}`;
+  ratioPreviewEl.textContent = `Proporción: 1:${roundTo(r, 1)}`;
+}
+
+function getStrengthLabel() {
+  const selectedOption = strengthEl.options[strengthEl.selectedIndex];
+  return selectedOption ? selectedOption.text : "Personalizada";
 }
 
 function formatWaterForDisplay(waterMl) {
@@ -238,12 +245,12 @@ function formatWaterForDisplay(waterMl) {
 
 function updateRatioRange() {
   const [min, max] = SUGGESTED_RATIO_RANGE[selectedMethod];
-  ratioRangeEl.textContent = `Rango sugerido para ${methodLabels[selectedMethod]}: 1:${min} a 1:${max}`;
+  ratioRangeEl.textContent = `Proporción sugerida para ${methodLabels[selectedMethod]}: 1:${min} a 1:${max}`;
 }
 
 function updateGrindHint() {
   if (!grindHintEl) return;
-  grindHintEl.textContent = `Molienda recomendada para ${methodLabels[selectedMethod]}: ${grindRecommendations[selectedMethod]}.`;
+  grindHintEl.textContent = `Molienda sugerida para ${methodLabels[selectedMethod]}: ${grindRecommendations[selectedMethod]}.`;
 }
 
 function updateMethodHint() {
@@ -277,23 +284,24 @@ function updateQuickSummary(coffee, waterValue, waterUnit) {
 function calculateAndRender({ animate = true } = {}) {
   const cups = parseInt(cupsEl.value, 10);
   const strength = parseFloat(strengthEl.value);
+  const strengthLabel = getStrengthLabel();
 
   if (!selectedMethod || !methodLabels[selectedMethod]) {
-    showError("Selecciona un método de preparación.");
+    showNotice("Elige un método de preparación.");
     return null;
   }
 
   if (!Number.isFinite(cups) || cups < 1) {
-    showError("Selecciona un número válido de tazas.");
+    showNotice("Selecciona una cantidad de tazas válida.");
     return null;
   }
 
   if (!Number.isFinite(strength) || strength <= 0) {
-    showError("Selecciona una intensidad válida.");
+    showNotice("Selecciona un nivel de intensidad válido.");
     return null;
   }
 
-  showError("");
+  showNotice("");
 
   const water = computeWaterMl(selectedMethod, cups);
   const { min, max } = getBounds(selectedMethod);
@@ -313,7 +321,7 @@ function calculateAndRender({ animate = true } = {}) {
 
   waterUnitEl.textContent = waterDisplay.unit;
   updateQuickSummary(coffeeRounded, waterDisplay.value, waterDisplay.unit);
-  metaEl.textContent = `Método: ${methodLabels[selectedMethod]} | Base 1:${baseRatio[selectedMethod]} | Ajustado 1:${roundTo(ratio, 1)} | Fuerza x${strength}`;
+  metaEl.textContent = `Método: ${methodLabels[selectedMethod]} · Base 1:${baseRatio[selectedMethod]} · Ajustada 1:${roundTo(ratio, 1)} · Intensidad: ${strengthLabel} (x${strength})`;
 
   updateRatioPreview();
   updateRatioRange();
@@ -382,16 +390,16 @@ copyBtn.addEventListener("click", async () => {
     `Tazas: ${recipe.cups}`,
     `Café: ${recipe.coffee} g`,
     `Agua: ${recipe.water} ${recipe.waterUnit}`,
-    `Ratio ajustado: 1:${recipe.ratio}`,
-    `Molienda recomendada: ${grindRecommendations[selectedMethod]}`,
+    `Proporción ajustada: 1:${recipe.ratio}`,
+    `Molienda sugerida: ${grindRecommendations[selectedMethod]}`,
     methodHints[selectedMethod] ? `Nota: ${methodHints[selectedMethod]}` : ""
   ].filter(Boolean).join("\n");
 
   try {
     await navigator.clipboard.writeText(text);
-    showError("Receta copiada al portapapeles.");
+    showNotice("Receta copiada.", "success");
   } catch {
-    showError("No se pudo copiar automáticamente. Intenta de nuevo.");
+    showNotice("No se pudo copiar. Inténtalo de nuevo.");
   }
 });
 
@@ -406,7 +414,7 @@ resetBtn.addEventListener("click", () => {
   syncMethodUI();
   syncAdvancedInputs();
   calculateAndRender({ animate: false });
-  showError("");
+  showNotice("");
 });
 
 toggleAdvancedBtn.addEventListener("click", () => {
