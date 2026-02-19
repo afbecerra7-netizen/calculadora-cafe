@@ -479,7 +479,12 @@ input[type="number"] {
   margin-top: 0.75rem;
 }
 
+.knowledge-grid > * {
+  min-width: 0;
+}
+
 .knowledge-card {
+  min-width: 0;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.76);
   background: linear-gradient(152deg, rgba(255, 255, 255, 0.78), rgba(255, 242, 224, 0.58));
@@ -502,7 +507,7 @@ input[type="number"] {
 .mini-steps li {
   counter-increment: step;
   display: grid;
-  grid-template-columns: 1.5rem 1fr;
+  grid-template-columns: 1.5rem minmax(0, 1fr);
   gap: 0.55rem;
   align-items: start;
   margin: 0.44rem 0;
@@ -526,7 +531,10 @@ input[type="number"] {
 
 .table-wrap {
   margin-top: 0.62rem;
+  max-width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .ratio-table {
@@ -669,8 +677,25 @@ input[type="number"] {
   }
 
   .ratio-table {
-    min-width: 430px;
-    font-size: 0.8rem;
+    min-width: 0;
+    width: 100%;
+    table-layout: fixed;
+    font-size: 0.78rem;
+  }
+
+  .ratio-table thead th:nth-child(1) {
+    width: 38%;
+  }
+
+  .ratio-table thead th:nth-child(2),
+  .ratio-table thead th:nth-child(3) {
+    width: 31%;
+  }
+
+  .ratio-table th,
+  .ratio-table td {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .quick-summary {
