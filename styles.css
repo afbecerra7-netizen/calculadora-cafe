@@ -684,16 +684,25 @@ input[type="number"] {
   }
 
   .ratio-table thead th:nth-child(1) {
-    width: 38%;
+    width: 34%;
   }
 
   .ratio-table thead th:nth-child(2),
   .ratio-table thead th:nth-child(3) {
-    width: 31%;
+    width: 33%;
+  }
+
+  .ratio-table thead th {
+    font-size: 0.64rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   .ratio-table th,
   .ratio-table td {
+    padding: 0.4rem 0.22rem;
     white-space: normal;
     overflow-wrap: anywhere;
   }
