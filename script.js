@@ -22,8 +22,13 @@ const grindRecommendations = {
   chemex: "Molienda media-gruesa",
   v60: "Molienda media-fina",
   frenchpress: "Molienda gruesa",
-  moka: "Molienda fina-media (más gruesa que espresso)",
-  coldbrew: "Molienda gruesa a extra-gruesa"
+  moka: "Molienda fina-media (tipo sal de mesa, más gruesa que espresso)",
+  coldbrew: "Molienda gruesa"
+};
+
+const methodHints = {
+  coldbrew: "Cold Brew se calcula en modo concentrado; diluye 1:2 o 1:3 al servir.",
+  moka: "En Moka italiana no compactes el café y retira del fuego al final del burbujeo."
 };
 
 const brewGuides = {
@@ -85,6 +90,7 @@ const metaEl = document.getElementById("meta");
 const ratioPreviewEl = document.getElementById("ratioPreview");
 const ratioRangeEl = document.getElementById("ratioRange");
 const grindHintEl = document.getElementById("grindHint");
+const methodHintEl = document.getElementById("methodHint");
 const brewStepsEl = document.getElementById("brewSteps");
 const stickyCoffeeEl = document.getElementById("stickyCoffee");
 const stickyWaterEl = document.getElementById("stickyWater");
@@ -223,6 +229,11 @@ function updateGrindHint() {
   grindHintEl.textContent = `Molienda recomendada para ${methodLabels[selectedMethod]}: ${grindRecommendations[selectedMethod]}.`;
 }
 
+function updateMethodHint() {
+  if (!methodHintEl) return;
+  methodHintEl.textContent = methodHints[selectedMethod] || "";
+}
+
 function renderSteps(coffeeGrams, waterValue, waterUnit) {
   const steps = brewGuides[selectedMethod].map((step) =>
     step
@@ -289,6 +300,7 @@ function calculateAndRender({ animate = true } = {}) {
   updateRatioPreview();
   updateRatioRange();
   updateGrindHint();
+  updateMethodHint();
   renderSteps(coffeeRounded, waterDisplay.value, waterDisplay.unit);
   savePrefs();
 
@@ -352,8 +364,9 @@ copyBtn.addEventListener("click", async () => {
     `Café: ${recipe.coffee} g`,
     `Agua: ${recipe.water} ${recipe.waterUnit}`,
     `Ratio ajustado: 1:${recipe.ratio}`,
-    `Molienda recomendada: ${grindRecommendations[selectedMethod]}`
-  ].join("\n");
+    `Molienda recomendada: ${grindRecommendations[selectedMethod]}`,
+    methodHints[selectedMethod] ? `Nota: ${methodHints[selectedMethod]}` : ""
+  ].filter(Boolean).join("\n");
 
   try {
     await navigator.clipboard.writeText(text);

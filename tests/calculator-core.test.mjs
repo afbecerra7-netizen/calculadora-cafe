@@ -26,8 +26,8 @@ test("computeWaterMl y computeCoffeeGrams calculan receta base", () => {
   const ratio = computeAdjustedRatio(16, 1);
   const coffee = computeCoffeeGrams(water, ratio);
 
-  assert.equal(water, 330);
-  assert.equal(roundTo(coffee, 0), 21);
+  assert.equal(water, 300);
+  assert.equal(roundTo(coffee, 0), 19);
 });
 
 test("mlToOz convierte correctamente", () => {
@@ -40,6 +40,6 @@ test("moka usa agua y ratio base esperados", () => {
   const ratio = computeAdjustedRatio(DEFAULT_BASE_RATIO.moka, 1);
   const coffee = computeCoffeeGrams(water, ratio);
 
-  assert.equal(water, 100);
-  assert.equal(roundTo(coffee, 0), 11);
+  assert.equal(water, 120);
+  assert.equal(roundTo(coffee, 0), 12);
 });

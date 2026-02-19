@@ -1,28 +1,28 @@
 export const WATER_PER_CUP = {
-  aeropress: 100,
-  chemex: 165,
-  v60: 175,
-  frenchpress: 250,
+  aeropress: 280,
+  chemex: 150,
+  v60: 170,
+  frenchpress: 180,
   coldbrew: 160,
-  moka: 50
+  moka: 60
 };
 
 export const DEFAULT_BASE_RATIO = {
-  aeropress: 15,
+  aeropress: 16,
   chemex: 16,
-  v60: 16,
+  v60: 17,
   frenchpress: 14,
-  coldbrew: 8,
-  moka: 9
+  coldbrew: 6,
+  moka: 10
 };
 
 export const SUGGESTED_RATIO_RANGE = {
-  aeropress: [13, 17],
+  aeropress: [15, 17],
   chemex: [15, 17],
-  v60: [15, 17],
+  v60: [16, 18],
   frenchpress: [12, 15],
-  coldbrew: [6, 10],
-  moka: [8, 10]
+  coldbrew: [4, 8],
+  moka: [8, 12]
 };
 
 export function roundTo(val, decimals = 0) {
