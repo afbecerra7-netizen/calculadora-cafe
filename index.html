@@ -176,7 +176,7 @@
       <p class="hint">Puedes ajustar el ratio base por método y se guarda localmente.</p>
     </section>
 
-    <section class="glass section1 results-panel">
+    <section class="glass section1 results-panel" id="resultsPanel">
       <div class="actions-row">
         <button class="btn btn-secondary" id="copyRecipe" type="button">Copiar receta</button>
         <button class="btn btn-secondary" id="reset" type="button">Restablecer</button>
@@ -201,6 +201,14 @@
       <ol class="steps" id="brewSteps"></ol>
     </section>
   </main>
+
+  <aside class="quick-summary" id="quickSummary" aria-live="polite">
+    <div class="quick-summary-values">
+      <p><strong>Café</strong> <span id="stickyCoffee">-</span> g</p>
+      <p><strong>Agua</strong> <span id="stickyWater">-</span> <span id="stickyWaterUnit">ml</span></p>
+    </div>
+    <button class="quick-summary-btn" id="jumpToResults" type="button">Ver detalle</button>
+  </aside>
 
   <script type="module" src="script.js"></script>
 </body>

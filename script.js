@@ -69,6 +69,11 @@ const metaEl = document.getElementById("meta");
 const ratioPreviewEl = document.getElementById("ratioPreview");
 const ratioRangeEl = document.getElementById("ratioRange");
 const brewStepsEl = document.getElementById("brewSteps");
+const stickyCoffeeEl = document.getElementById("stickyCoffee");
+const stickyWaterEl = document.getElementById("stickyWater");
+const stickyWaterUnitEl = document.getElementById("stickyWaterUnit");
+const jumpToResultsBtn = document.getElementById("jumpToResults");
+const resultsPanelEl = document.getElementById("resultsPanel");
 
 const copyBtn = document.getElementById("copyRecipe");
 const resetBtn = document.getElementById("reset");
@@ -212,6 +217,13 @@ function renderSteps(coffeeGrams, waterValue, waterUnit) {
   });
 }
 
+function updateQuickSummary(coffee, waterValue, waterUnit) {
+  if (!stickyCoffeeEl || !stickyWaterEl || !stickyWaterUnitEl) return;
+  stickyCoffeeEl.textContent = coffee;
+  stickyWaterEl.textContent = waterValue;
+  stickyWaterUnitEl.textContent = waterUnit;
+}
+
 function calculateAndRender({ animate = true } = {}) {
   const cups = parseInt(cupsEl.value, 10);
   const strength = parseFloat(strengthEl.value);
@@ -249,6 +261,7 @@ function calculateAndRender({ animate = true } = {}) {
   }
 
   waterUnitEl.textContent = waterDisplay.unit;
+  updateQuickSummary(coffeeRounded, waterDisplay.value, waterDisplay.unit);
   metaEl.textContent = `Método: ${methodLabels[selectedMethod]} | Base 1:${baseRatio[selectedMethod]} | Ajustado 1:${roundTo(ratio, 1)} | Fuerza x${strength}`;
 
   updateRatioPreview();
@@ -345,6 +358,12 @@ toggleAdvancedBtn.addEventListener("click", () => {
   advancedPanelEl.hidden = isOpen;
   toggleAdvancedBtn.setAttribute("aria-expanded", String(!isOpen));
 });
+
+if (jumpToResultsBtn && resultsPanelEl) {
+  jumpToResultsBtn.addEventListener("click", () => {
+    resultsPanelEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+}
 
 loadPrefs();
 cupsOut.textContent = cupsEl.value;
