@@ -70,7 +70,6 @@ const ratioPreviewEl = document.getElementById("ratioPreview");
 const ratioRangeEl = document.getElementById("ratioRange");
 const brewStepsEl = document.getElementById("brewSteps");
 
-const calcBtn = document.getElementById("calc");
 const copyBtn = document.getElementById("copyRecipe");
 const resetBtn = document.getElementById("reset");
 const toggleAdvancedBtn = document.getElementById("toggleAdvanced");
@@ -305,10 +304,6 @@ ratioInputs.forEach((input) => {
     input.value = baseRatio[method];
     calculateAndRender({ animate: false });
   });
-});
-
-calcBtn.addEventListener("click", () => {
-  calculateAndRender({ animate: true });
 });
 
 copyBtn.addEventListener("click", async () => {
