@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Calculadora de Café">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff5e8" />
+      <stop offset="100%" stop-color="#e8d3bb" />
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.35" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="1060" cy="-30" r="260" fill="#f6c890" fill-opacity="0.45" />
+  <circle cx="80" cy="610" r="220" fill="#d8995b" fill-opacity="0.25" />
+
+  <rect x="120" y="95" width="960" height="440" rx="42" fill="url(#glass)" stroke="#ffffff" stroke-opacity="0.7" />
+
+  <text x="190" y="245" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="70" fill="#4f2f12" font-weight="700">
+    Calculadora de Café
+  </text>
+  <text x="190" y="315" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="34" fill="#6b4a2b">
+    Ratio por método, tazas e intensidad
+  </text>
+
+  <g transform="translate(860 190)" fill="none" stroke="#ba6a1f" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-50 50h145v95a45 45 0 0 1-45 45H-5a45 45 0 0 1-45-45z" />
+    <path d="M95 75h25a38 38 0 0 1 0 76H95" />
+    <line x1="-10" y1="18" x2="-10" y2="45" />
+    <line x1="32" y1="8" x2="32" y2="45" />
+    <line x1="72" y1="18" x2="72" y2="45" />
+  </g>
+
+  <text x="190" y="405" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="28" fill="#7a5737">
+    AeroPress • Chemex • V60 • Prensa • Cold Brew
+  </text>
+  <text x="190" y="465" font-family="Avenir Next, Helvetica Neue, Arial, sans-serif" font-size="24" fill="#8d6641">
+    demo-cafe-calculadora.example
+  </text>
+</svg>

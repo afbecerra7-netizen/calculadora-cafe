@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Calculadora de Café | Ratio por Método y Tazas</title>
+  <meta name="description" content="Calcula cuántos gramos de café y mililitros de agua usar según método de preparación, número de tazas y nivel de intensidad." />
+  <meta name="keywords" content="calculadora de café, ratio café agua, aeroPress, chemex, v60, prensa francesa, cold brew, gramos de café por taza" />
+  <meta name="author" content="Calculadora de Café" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="theme-color" content="#E5810E" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <meta name="application-name" content="Calculadora de Café" />
+  <link rel="canonical" href="https://demo-cafe-calculadora.example/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:url" content="https://demo-cafe-calculadora.example/" />
+  <meta property="og:title" content="Calculadora de Café | Ratio por Método y Tazas" />
+  <meta property="og:description" content="Obtén la proporción ideal de café y agua para AeroPress, Chemex, V60, Prensa y Cold Brew." />
+  <meta property="og:site_name" content="Calculadora de Café" />
+  <meta property="og:image" content="https://demo-cafe-calculadora.example/og-image-cafe.svg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Calculadora de Café | Ratio por Método y Tazas" />
+  <meta name="twitter:description" content="Calcula gramos de café y mililitros de agua según método, tazas e intensidad." />
+  <meta name="twitter:image" content="https://demo-cafe-calculadora.example/og-image-cafe.svg" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Calculadora de Café",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "es",
+      "description": "Herramienta para calcular el ratio café-agua por método, número de tazas e intensidad.",
+      "featureList": [
+        "Selección de método: AeroPress, Chemex, V60, Prensa y Cold Brew",
+        "Ajuste de intensidad del café",
+        "Cálculo de gramos de café y mililitros de agua"
+      ]
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1" aria-hidden="true"></div>
+  <div class="bg-orb orb-2" aria-hidden="true"></div>
+  <div class="bg-orb orb-3" aria-hidden="true"></div>
+
+  <main id="maindiv">
+    <header class="glass hero">
+      <p class="eyebrow">Coffee Ratio Studio</p>
+      <h1>Calculadora de Café</h1>
+      <p class="hero-text">Define método, cantidad y fuerza. Obtén una receta equilibrada.</p>
+      <p class="current-method">Método actual: <strong id="currentMethod">AeroPress</strong></p>
+    </header>
+
+    <section class="glass section1">
+      <h2 class="section-title">Tipo de cafetera</h2>
+      <ul id="methods" class="methods-grid" role="listbox" aria-label="Selecciona método de preparación">
+        <li class="brewingelements" data-method="aeropress" role="option" tabindex="0" aria-selected="false">
+          <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="8" y="4" width="8" height="6" rx="1.5" />
+            <rect x="7" y="10" width="10" height="7" rx="1.5" />
+            <line x1="10" y1="17" x2="10" y2="20" />
+            <line x1="14" y1="17" x2="14" y2="20" />
+            <line x1="9" y1="20" x2="15" y2="20" />
+          </svg>
+          <span>AeroPress</span>
+        </li>
+        <li class="brewingelements" data-method="chemex" role="option" tabindex="0" aria-selected="false">
+          <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 4h6" />
+            <path d="M10 4v5l-4 7a3 3 0 0 0 2.6 4.5h6.8A3 3 0 0 0 18 16l-4-7V4" />
+            <line x1="8.5" y1="11.5" x2="15.5" y2="11.5" />
+          </svg>
+          <span>Chemex</span>
+        </li>
+        <li class="brewingelements" data-method="v60" role="option" tabindex="0" aria-selected="false">
+          <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6h12l-4.5 11h-3z" />
+            <line x1="8.5" y1="9" x2="15.5" y2="9" />
+            <line x1="9.5" y1="12" x2="14.5" y2="12" />
+            <line x1="10.5" y1="15" x2="13.5" y2="15" />
+          </svg>
+          <span>V60</span>
+        </li>
+        <li class="brewingelements" data-method="frenchpress" role="option" tabindex="0" aria-selected="false">
+          <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="7" y="4" width="9" height="16" rx="2" />
+            <path d="M16 7h2a2 2 0 0 1 0 4h-2" />
+            <line x1="10" y1="2.5" x2="10" y2="4" />
+            <line x1="13" y1="2.5" x2="13" y2="4" />
+            <line x1="11.5" y1="4" x2="11.5" y2="10" />
+          </svg>
+          <span>Prensa</span>
+        </li>
+        <li class="brewingelements" data-method="coldbrew" role="option" tabindex="0" aria-selected="false">
+          <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="6" y="6" width="12" height="14" rx="2" />
+            <line x1="9" y1="4" x2="15" y2="4" />
+            <line x1="12" y1="4" x2="12" y2="2" />
+            <path d="M9 11c0 1.4 1 2 3 2s3 .6 3 2" />
+            <circle cx="10" cy="16" r="0.8" />
+            <circle cx="14" cy="15" r="0.8" />
+          </svg>
+          <span>Cold Brew</span>
+        </li>
+      </ul>
+      <p class="hint">Selecciona un método para activar la receta base.</p>
+    </section>
+
+    <section class="glass section1">
+      <h2 class="section-title">Número de tazas</h2>
+      <div class="row cups-row">
+        <label for="cups" class="control-label">Tazas</label>
+        <input id="cups" type="range" min="1" max="12" step="1" value="1" aria-describedby="cupsHelp" />
+        <div class="value cup-value" aria-live="polite">
+          <span id="cupsOut">1</span>
+          <svg class="cup-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 9h11v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" />
+            <path d="M16 10h1.5a2.5 2.5 0 0 1 0 5H16" />
+            <line x1="8" y1="6" x2="8" y2="8" />
+            <line x1="11" y1="5.5" x2="11" y2="8" />
+            <line x1="14" y1="6" x2="14" y2="8" />
+          </svg>
+        </div>
+      </div>
+      <p class="hint" id="cupsHelp">El volumen por taza cambia automáticamente según el método elegido.</p>
+    </section>
+
+    <section class="glass section1">
+      <h2 class="section-title">Intensidad y unidades</h2>
+      <div class="row controls-row">
+        <div class="control-group">
+          <label for="strength" class="control-label">Intensidad</label>
+          <select id="strength">
+            <option value="0.75">Muy suave</option>
+            <option value="0.85">Suave</option>
+            <option value="1" selected>Normal</option>
+            <option value="1.2">Un poco fuerte</option>
+            <option value="1.5">Fuerte</option>
+            <option value="2">Muy fuerte</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="unit" class="control-label">Unidad de agua</label>
+          <select id="unit">
+            <option value="ml" selected>Mililitros (ml)</option>
+            <option value="oz">Onzas (oz)</option>
+          </select>
+        </div>
+        <span class="pill" id="ratioPreview" aria-live="polite">Ratio: -</span>
+      </div>
+      <p class="hint">A más intensidad, menor ratio y mayor cantidad de café.</p>
+    </section>
+
+    <section class="glass section1">
+      <div class="advanced-header">
+        <h2 class="section-title">Modo avanzado</h2>
+        <button class="text-btn" id="toggleAdvanced" type="button" aria-expanded="false" aria-controls="advancedPanel">Editar ratios base</button>
+      </div>
+      <div id="advancedPanel" class="advanced-panel" hidden>
+        <div class="advanced-grid">
+          <label>AeroPress <input type="number" min="6" max="25" step="0.1" data-ratio-method="aeropress" /></label>
+          <label>Chemex <input type="number" min="6" max="25" step="0.1" data-ratio-method="chemex" /></label>
+          <label>V60 <input type="number" min="6" max="25" step="0.1" data-ratio-method="v60" /></label>
+          <label>Prensa <input type="number" min="6" max="25" step="0.1" data-ratio-method="frenchpress" /></label>
+          <label>Cold Brew <input type="number" min="6" max="25" step="0.1" data-ratio-method="coldbrew" /></label>
+        </div>
+      </div>
+      <p class="hint">Puedes ajustar el ratio base por método y se guarda localmente.</p>
+    </section>
+
+    <section class="glass section1 results-panel">
+      <div class="actions-row">
+        <button class="btn" id="calc" type="button">Calcular receta</button>
+        <button class="btn btn-secondary" id="copyRecipe" type="button">Copiar receta</button>
+        <button class="btn btn-secondary" id="reset" type="button">Restablecer</button>
+      </div>
+
+      <p id="errorMsg" class="error" aria-live="polite"></p>
+
+      <div class="results">
+        <article class="metric-card">
+          <p class="metric-label">Café</p>
+          <p class="metric-value" aria-live="polite"><span id="coffeeG">-</span><small>g</small></p>
+        </article>
+        <article class="metric-card">
+          <p class="metric-label">Agua</p>
+          <p class="metric-value" aria-live="polite"><span id="waterMl">-</span><small id="waterUnit">ml</small></p>
+        </article>
+      </div>
+      <p class="hint meta-line" id="meta"></p>
+      <p class="hint" id="ratioRange" aria-live="polite"></p>
+
+      <h3 class="steps-title">Guía rápida</h3>
+      <ol class="steps" id="brewSteps"></ol>
+    </section>
+  </main>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
