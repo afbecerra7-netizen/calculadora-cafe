@@ -205,7 +205,12 @@ function renderSteps(coffeeGrams, waterValue, waterUnit) {
       .replace("{unit}", waterUnit)
   );
 
-  brewStepsEl.innerHTML = steps.map((step) => `<li>${step}</li>`).join("");
+  brewStepsEl.textContent = "";
+  steps.forEach((step) => {
+    const li = document.createElement("li");
+    li.textContent = step;
+    brewStepsEl.appendChild(li);
+  });
 }
 
 function calculateAndRender({ animate = true } = {}) {
