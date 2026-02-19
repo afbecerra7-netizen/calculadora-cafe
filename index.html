@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; style-src 'self'; script-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'; upgrade-insecure-requests" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Calculadora de Café Gratis | Ratio Café Agua por Método</title>
   <meta name="description" content="Calcula gramos de café y agua por método (AeroPress, Chemex, V60, Prensa Francesa, Moka italiana y Cold Brew), número de tazas e intensidad en segundos." />
@@ -131,7 +130,9 @@
       ]
     }
   </script>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" href="styles.min.css" as="style" />
+  <link rel="stylesheet" href="styles.min.css" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="styles.min.css" /></noscript>
 </head>
 <body>
   <div class="bg-orb orb-1" aria-hidden="true"></div>
@@ -393,6 +394,6 @@
     <button class="quick-summary-btn" id="jumpToResults" type="button">Ver receta</button>
   </aside>
 
-  <script type="module" src="script.js"></script>
+  <script defer src="script.min.js"></script>
 </body>
 </html>

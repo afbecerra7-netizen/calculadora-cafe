@@ -1,13 +1,61 @@
-import {
-  DEFAULT_BASE_RATIO,
-  SUGGESTED_RATIO_RANGE,
-  computeAdjustedRatio,
-  computeCoffeeGrams,
-  computeWaterMl,
-  getRatioBounds,
-  mlToOz,
-  roundTo
-} from "./calculator-core.mjs";
+const WATER_PER_CUP = {
+  aeropress: 280,
+  chemex: 150,
+  v60: 170,
+  frenchpress: 180,
+  coldbrew: 160,
+  moka: 60
+};
+
+const DEFAULT_BASE_RATIO = {
+  aeropress: 16,
+  chemex: 16,
+  v60: 17,
+  frenchpress: 14,
+  coldbrew: 6,
+  moka: 10
+};
+
+const SUGGESTED_RATIO_RANGE = {
+  aeropress: [15, 17],
+  chemex: [15, 17],
+  v60: [16, 18],
+  frenchpress: [12, 15],
+  coldbrew: [4, 8],
+  moka: [8, 12]
+};
+
+function roundTo(val, decimals = 0) {
+  const p = Math.pow(10, decimals);
+  return Math.round(val * p) / p;
+}
+
+function clamp(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
+function getRatioBounds(method = "") {
+  if (method === "coldbrew") {
+    return { min: 4, max: 25 };
+  }
+  return { min: 6, max: 25 };
+}
+
+function computeAdjustedRatio(baseRatio, strengthMultiplier, minRatio = 6, maxRatio = 25) {
+  return clamp(baseRatio / strengthMultiplier, minRatio, maxRatio);
+}
+
+function computeWaterMl(method, cups) {
+  return cups * WATER_PER_CUP[method];
+}
+
+function computeCoffeeGrams(waterMl, ratio) {
+  return waterMl / ratio;
+}
+
+function mlToOz(ml) {
+  return ml / 29.5735;
+}
 
 const methodLabels = {
   aeropress: "AeroPress",
