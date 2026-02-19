@@ -6,6 +6,7 @@ import {
   computeAdjustedRatio,
   computeCoffeeGrams,
   computeWaterMl,
+  getRatioBounds,
   mlToOz,
   roundTo
 } from "../calculator-core.mjs";
@@ -19,6 +20,13 @@ test("computeAdjustedRatio baja ratio cuando sube intensidad", () => {
 test("computeAdjustedRatio respeta límites", () => {
   assert.equal(computeAdjustedRatio(40, 0.5), 25);
   assert.equal(computeAdjustedRatio(6, 4), 6);
+});
+
+test("cold brew permite ratios más cerrados que 1:6 con fuerza alta", () => {
+  const { min, max } = getRatioBounds("coldbrew");
+  const ratio = computeAdjustedRatio(DEFAULT_BASE_RATIO.coldbrew, 2, min, max);
+  assert.equal(min, 4);
+  assert.equal(ratio, 4);
 });
 
 test("computeWaterMl y computeCoffeeGrams calculan receta base", () => {

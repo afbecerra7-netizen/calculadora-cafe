@@ -4,6 +4,7 @@ import {
   computeAdjustedRatio,
   computeCoffeeGrams,
   computeWaterMl,
+  getRatioBounds,
   mlToOz,
   roundTo
 } from "./calculator-core.mjs";
@@ -166,6 +167,10 @@ function savePrefs() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
 }
 
+function getBounds(method) {
+  return getRatioBounds(method);
+}
+
 function loadPrefs() {
   const prefs = getPrefs();
   if (!prefs) return;
@@ -178,7 +183,15 @@ function loadPrefs() {
   if (prefs.strength) strengthEl.value = prefs.strength;
   if (prefs.unit) unitEl.value = prefs.unit;
   if (prefs.baseRatio && typeof prefs.baseRatio === "object") {
-    baseRatio = { ...baseRatio, ...prefs.baseRatio };
+    const sanitized = { ...baseRatio };
+    Object.entries(prefs.baseRatio).forEach(([method, value]) => {
+      if (!methodLabels[method]) return;
+      const parsed = parseFloat(value);
+      if (!Number.isFinite(parsed)) return;
+      const { min, max } = getBounds(method);
+      sanitized[method] = Math.min(Math.max(parsed, min), max);
+    });
+    baseRatio = sanitized;
   }
 }
 
@@ -194,13 +207,17 @@ function syncMethodUI() {
 function syncAdvancedInputs() {
   ratioInputs.forEach((input) => {
     const method = input.dataset.ratioMethod;
+    const { min, max } = getBounds(method);
+    input.min = String(min);
+    input.max = String(max);
     input.value = baseRatio[method];
   });
 }
 
 function updateRatioPreview() {
   const strength = parseFloat(strengthEl.value);
-  const r = computeAdjustedRatio(baseRatio[selectedMethod], strength);
+  const { min, max } = getBounds(selectedMethod);
+  const r = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
   ratioPreviewEl.textContent = `Ratio: 1:${roundTo(r, 1)}`;
 }
 
@@ -279,7 +296,8 @@ function calculateAndRender({ animate = true } = {}) {
   showError("");
 
   const water = computeWaterMl(selectedMethod, cups);
-  const ratio = computeAdjustedRatio(baseRatio[selectedMethod], strength);
+  const { min, max } = getBounds(selectedMethod);
+  const ratio = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
   const coffee = computeCoffeeGrams(water, ratio);
 
   const coffeeRounded = roundTo(coffee, 0);
@@ -348,7 +366,8 @@ ratioInputs.forEach((input) => {
     const method = input.dataset.ratioMethod;
     const val = parseFloat(input.value);
     if (!Number.isFinite(val)) return;
-    baseRatio[method] = Math.min(Math.max(val, 6), 25);
+    const { min, max } = getBounds(method);
+    baseRatio[method] = Math.min(Math.max(val, min), max);
     input.value = baseRatio[method];
     calculateAndRender({ animate: false });
   });

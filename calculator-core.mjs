@@ -34,8 +34,15 @@ export function clamp(val, min, max) {
   return Math.min(Math.max(val, min), max);
 }
 
-export function computeAdjustedRatio(baseRatio, strengthMultiplier) {
-  return clamp(baseRatio / strengthMultiplier, 6, 25);
+export function getRatioBounds(method = "") {
+  if (method === "coldbrew") {
+    return { min: 4, max: 25 };
+  }
+  return { min: 6, max: 25 };
+}
+
+export function computeAdjustedRatio(baseRatio, strengthMultiplier, minRatio = 6, maxRatio = 25) {
+  return clamp(baseRatio / strengthMultiplier, minRatio, maxRatio);
 }
 
 export function computeWaterMl(method, cups) {
