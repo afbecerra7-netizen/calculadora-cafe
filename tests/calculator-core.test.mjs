@@ -34,3 +34,12 @@ test("mlToOz convierte correctamente", () => {
   const oz = mlToOz(300);
   assert.equal(roundTo(oz, 1), 10.1);
 });
+
+test("moka usa agua y ratio base esperados", () => {
+  const water = computeWaterMl("moka", 2);
+  const ratio = computeAdjustedRatio(DEFAULT_BASE_RATIO.moka, 1);
+  const coffee = computeCoffeeGrams(water, ratio);
+
+  assert.equal(water, 100);
+  assert.equal(roundTo(coffee, 0), 11);
+});

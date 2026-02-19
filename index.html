@@ -7,7 +7,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>Calculadora de Café | Ratio por Método y Tazas</title>
   <meta name="description" content="Calcula cuántos gramos de café y mililitros de agua usar según método de preparación, número de tazas y nivel de intensidad." />
-  <meta name="keywords" content="calculadora de café, ratio café agua, aeroPress, chemex, v60, prensa francesa, cold brew, gramos de café por taza" />
+  <meta name="keywords" content="calculadora de café, ratio café agua, aeropress, chemex, v60, prensa francesa, moka italiana, cold brew, gramos de café por taza" />
   <meta name="author" content="Calculadora de Café" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="theme-color" content="#E5810E" />
@@ -19,7 +19,7 @@
   <meta property="og:locale" content="es_ES" />
   <meta property="og:url" content="https://demo-cafe-calculadora.example/" />
   <meta property="og:title" content="Calculadora de Café | Ratio por Método y Tazas" />
-  <meta property="og:description" content="Obtén la proporción ideal de café y agua para AeroPress, Chemex, V60, Prensa y Cold Brew." />
+  <meta property="og:description" content="Obtén la proporción ideal de café y agua para AeroPress, Chemex, V60, Prensa, Moka y Cold Brew." />
   <meta property="og:site_name" content="Calculadora de Café" />
   <meta property="og:image" content="https://demo-cafe-calculadora.example/og-image-cafe.svg" />
 
@@ -38,7 +38,7 @@
       "inLanguage": "es",
       "description": "Herramienta para calcular el ratio café-agua por método, número de tazas e intensidad.",
       "featureList": [
-        "Selección de método: AeroPress, Chemex, V60, Prensa y Cold Brew",
+        "Selección de método: AeroPress, Chemex, V60, Prensa, Moka y Cold Brew",
         "Ajuste de intensidad del café",
         "Cálculo de gramos de café y mililitros de agua"
       ]
@@ -105,6 +105,16 @@
             <line x1="11.5" y1="4" x2="11.5" y2="10" />
           </svg>
           <span>Prensa</span>
+        </li>
+        <li class="brewingelements" data-method="moka" role="option" tabindex="0" aria-selected="false">
+          <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8 6h8l-1.5 4h-5z" />
+            <path d="M8 10h8v6l-2.2 3h-3.6L8 16z" />
+            <line x1="12" y1="3" x2="12" y2="6" />
+            <path d="M16 12h2a1.6 1.6 0 0 1 0 3h-2" />
+            <line x1="10" y1="20" x2="14" y2="20" />
+          </svg>
+          <span>Moka</span>
         </li>
         <li class="brewingelements" data-method="coldbrew" role="option" tabindex="0" aria-selected="false">
           <svg class="method-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -177,6 +187,7 @@
           <label>Chemex <input type="number" min="6" max="25" step="0.1" data-ratio-method="chemex" /></label>
           <label>V60 <input type="number" min="6" max="25" step="0.1" data-ratio-method="v60" /></label>
           <label>Prensa <input type="number" min="6" max="25" step="0.1" data-ratio-method="frenchpress" /></label>
+          <label>Moka italiana <input type="number" min="6" max="25" step="0.1" data-ratio-method="moka" /></label>
           <label>Cold Brew <input type="number" min="6" max="25" step="0.1" data-ratio-method="coldbrew" /></label>
         </div>
       </div>
@@ -203,6 +214,7 @@
       </div>
       <p class="hint meta-line" id="meta"></p>
       <p class="hint" id="ratioRange" aria-live="polite"></p>
+      <p class="hint" id="grindHint" aria-live="polite"></p>
 
       <h3 class="steps-title">Guía rápida</h3>
       <ol class="steps" id="brewSteps"></ol>

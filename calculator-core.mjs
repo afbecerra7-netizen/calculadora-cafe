@@ -3,7 +3,8 @@ export const WATER_PER_CUP = {
   chemex: 165,
   v60: 175,
   frenchpress: 250,
-  coldbrew: 160
+  coldbrew: 160,
+  moka: 50
 };
 
 export const DEFAULT_BASE_RATIO = {
@@ -11,7 +12,8 @@ export const DEFAULT_BASE_RATIO = {
   chemex: 16,
   v60: 16,
   frenchpress: 14,
-  coldbrew: 8
+  coldbrew: 8,
+  moka: 9
 };
 
 export const SUGGESTED_RATIO_RANGE = {
@@ -19,7 +21,8 @@ export const SUGGESTED_RATIO_RANGE = {
   chemex: [15, 17],
   v60: [15, 17],
   frenchpress: [12, 15],
-  coldbrew: [6, 10]
+  coldbrew: [6, 10],
+  moka: [8, 10]
 };
 
 export function roundTo(val, decimals = 0) {

@@ -13,7 +13,17 @@ const methodLabels = {
   chemex: "Chemex",
   v60: "V60",
   frenchpress: "Prensa",
+  moka: "Moka italiana",
   coldbrew: "Cold Brew"
+};
+
+const grindRecommendations = {
+  aeropress: "Molienda media-fina",
+  chemex: "Molienda media-gruesa",
+  v60: "Molienda media-fina",
+  frenchpress: "Molienda gruesa",
+  moka: "Molienda fina-media (más gruesa que espresso)",
+  coldbrew: "Molienda gruesa a extra-gruesa"
 };
 
 const brewGuides = {
@@ -40,6 +50,12 @@ const brewGuides = {
     "Vierte {water} {unit} de agua y remueve.",
     "Infusiona 4 minutos y rompe la costra.",
     "Presiona lentamente y sirve."
+  ],
+  moka: [
+    "Llena la base con agua hasta la válvula.",
+    "Añade {coffee} g de café molido fino-medio sin prensar.",
+    "Arma la Moka y calienta a fuego medio-bajo.",
+    "Retira cuando el flujo se vuelva claro y sirve."
   ],
   coldbrew: [
     "Añade {coffee} g de café molido grueso.",
@@ -68,6 +84,7 @@ const waterUnitEl = document.getElementById("waterUnit");
 const metaEl = document.getElementById("meta");
 const ratioPreviewEl = document.getElementById("ratioPreview");
 const ratioRangeEl = document.getElementById("ratioRange");
+const grindHintEl = document.getElementById("grindHint");
 const brewStepsEl = document.getElementById("brewSteps");
 const stickyCoffeeEl = document.getElementById("stickyCoffee");
 const stickyWaterEl = document.getElementById("stickyWater");
@@ -201,6 +218,11 @@ function updateRatioRange() {
   ratioRangeEl.textContent = `Rango sugerido para ${methodLabels[selectedMethod]}: 1:${min} a 1:${max}`;
 }
 
+function updateGrindHint() {
+  if (!grindHintEl) return;
+  grindHintEl.textContent = `Molienda recomendada para ${methodLabels[selectedMethod]}: ${grindRecommendations[selectedMethod]}.`;
+}
+
 function renderSteps(coffeeGrams, waterValue, waterUnit) {
   const steps = brewGuides[selectedMethod].map((step) =>
     step
@@ -266,6 +288,7 @@ function calculateAndRender({ animate = true } = {}) {
 
   updateRatioPreview();
   updateRatioRange();
+  updateGrindHint();
   renderSteps(coffeeRounded, waterDisplay.value, waterDisplay.unit);
   savePrefs();
 
@@ -328,7 +351,8 @@ copyBtn.addEventListener("click", async () => {
     `Tazas: ${recipe.cups}`,
     `Café: ${recipe.coffee} g`,
     `Agua: ${recipe.water} ${recipe.waterUnit}`,
-    `Ratio ajustado: 1:${recipe.ratio}`
+    `Ratio ajustado: 1:${recipe.ratio}`,
+    `Molienda recomendada: ${grindRecommendations[selectedMethod]}`
   ].join("\n");
 
   try {

@@ -8,8 +8,9 @@ Repositorio: [https://github.com/afbecerra7-netizen/calculadora-cafe](https://gi
 
 ## Funcionalidades
 
-- Selección de método: AeroPress, Chemex, V60, Prensa y Cold Brew.
+- Selección de método: AeroPress, Chemex, V60, Prensa, Moka italiana y Cold Brew.
 - Cálculo de gramos de café y agua según ratio ajustado.
+- Recomendación de molienda por método dentro de la receta.
 - Selector de intensidad (afecta ratio final).
 - Conversión de agua en `ml` u `oz`.
 - Modo avanzado para editar ratios base por método.
