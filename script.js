@@ -62,6 +62,10 @@ function clampCustomCupMl(value) {
   return Math.min(Math.max(value, 40), 1000);
 }
 
+function isCustomCupInRange(value) {
+  return Number.isFinite(value) && value >= 40 && value <= 1000;
+}
+
 const methodLabels = {
   aeropress: "AeroPress",
   chemex: "Chemex",
@@ -284,7 +288,7 @@ function syncAdvancedInputs() {
 }
 
 function getEffectiveCupSizeMl(method) {
-  return Number.isFinite(customCupMl) ? clampCustomCupMl(customCupMl) : WATER_PER_CUP[method];
+  return isCustomCupInRange(customCupMl) ? customCupMl : WATER_PER_CUP[method];
 }
 
 function updateRatioPreview() {
@@ -329,8 +333,13 @@ function formatWaterForDisplay(waterMl) {
 function updateCupsHelp() {
   if (!cupsHelpEl) return;
 
-  if (Number.isFinite(customCupMl)) {
+  if (isCustomCupInRange(customCupMl)) {
     cupsHelpEl.textContent = `Usando ${roundTo(getEffectiveCupSizeMl(selectedMethod), 0)} ml por taza (ajuste personal activo).`;
+    return;
+  }
+
+  if (Number.isFinite(customCupMl)) {
+    cupsHelpEl.textContent = "Ingresa un tamaño entre 40 y 1000 ml para activar el ajuste personal.";
     return;
   }
 
