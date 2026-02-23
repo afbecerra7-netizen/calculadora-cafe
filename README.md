@@ -4,6 +4,8 @@ Calculadora web para preparar café por método, número de tazas e intensidad, 
 
 ## Demo
 
+Sitio: [https://calculadoradecafe.com](https://calculadoradecafe.com)
+
 Repositorio: [https://github.com/afbecerra7-netizen/calculadora-cafe](https://github.com/afbecerra7-netizen/calculadora-cafe)
 
 ## Funcionalidades
@@ -84,15 +86,9 @@ Salida:
 
 ## Deploy
 
-1. Actualiza dominio real en `index.html`:
-   - `canonical`
-   - `og:url`
-   - `og:image`
-   - `twitter:image`
-2. Reemplaza URLs de ejemplo en:
-   - `robots.txt`
-   - `sitemap.xml`
-3. Publica en GitHub Pages, Netlify o Vercel como sitio estático.
+Dominio productivo actual: `https://calculadoradecafe.com`.
+
+Publica en GitHub Pages, Netlify o Vercel como sitio estático y apunta el dominio principal a este proyecto.
 
 ## Licencia
 

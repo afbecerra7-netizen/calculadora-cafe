@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Host: calculadora-cafe-hazel.vercel.app
-Sitemap: https://calculadora-cafe-hazel.vercel.app/sitemap.xml
+Host: calculadoradecafe.com
+Sitemap: https://calculadoradecafe.com/sitemap.xml
