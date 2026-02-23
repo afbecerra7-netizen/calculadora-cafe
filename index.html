@@ -330,10 +330,22 @@
       </div>
       <div id="advancedPanel" class="advanced-panel" hidden>
         <div class="advanced-grid">
-          <label class="advanced-full">Tamaño de taza personal (ml)
+          <div class="advanced-full">
+            <label for="customCupMl">Tamaño de taza personal (ml)</label>
             <input id="customCupMl" type="number" min="40" max="1000" step="5" inputmode="numeric"
               placeholder="Opcional. Ejemplo: 250" />
-          </label>
+            <div class="row" role="group" aria-label="Presets de tamaño de taza">
+              <button class="text-btn" type="button" data-cup-preset="240">
+                240 ml (estándar)
+              </button>
+              <button class="text-btn" type="button" data-cup-preset="280">
+                280 ml (AeroPress grande)
+              </button>
+              <button class="text-btn" type="button" data-cup-preset="clear">
+                Quitar ajuste
+              </button>
+            </div>
+          </div>
           <label>AeroPress
             <input type="number" min="6" max="25" step="0.1" data-ratio-method="aeropress" /></label>
           <label>Chemex

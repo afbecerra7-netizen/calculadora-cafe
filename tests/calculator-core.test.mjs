@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 
 import {
   DEFAULT_BASE_RATIO,
+  WATER_PER_CUP,
   computeAdjustedRatio,
   computeCoffeeGrams,
   computeWaterMl,
@@ -36,6 +37,11 @@ test("computeWaterMl y computeCoffeeGrams calculan receta base", () => {
 
   assert.equal(water, 300);
   assert.equal(roundTo(coffee, 0), 19);
+});
+
+test("aeropress usa 240 ml por taza como volumen sugerido", () => {
+  assert.equal(WATER_PER_CUP.aeropress, 240);
+  assert.equal(computeWaterMl("aeropress", 1), 240);
 });
 
 test("mlToOz convierte correctamente", () => {

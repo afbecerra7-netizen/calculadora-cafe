@@ -1,5 +1,5 @@
 export const WATER_PER_CUP = {
-  aeropress: 280,
+  aeropress: 240,
   chemex: 150,
   v60: 170,
   frenchpress: 180,

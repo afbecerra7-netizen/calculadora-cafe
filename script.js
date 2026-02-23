@@ -1,5 +1,5 @@
 const WATER_PER_CUP = {
-  aeropress: 280,
+  aeropress: 240,
   chemex: 150,
   v60: 170,
   frenchpress: 180,
@@ -173,6 +173,7 @@ const resetBtn = document.getElementById("reset");
 const toggleAdvancedBtn = document.getElementById("toggleAdvanced");
 const advancedPanelEl = document.getElementById("advancedPanel");
 const customCupMlEl = document.getElementById("customCupMl");
+const customCupPresetButtons = document.querySelectorAll("[data-cup-preset]");
 const ratioInputs = document.querySelectorAll("[data-ratio-method]");
 const ANALYTICS_DEBOUNCE_MS = 280;
 const ANALYTICS_DEBUG_STORAGE_KEY = "coffeeAnalyticsDebug";
@@ -642,6 +643,31 @@ if (customCupMlEl) {
     customCupMlEl.value = String(roundTo(customCupMl, 0));
     calculateAndRender({ animate: false });
     trackEvent("custom_cup_updated", getAnalyticsContext());
+  });
+}
+
+if (customCupPresetButtons.length > 0) {
+  customCupPresetButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const preset = button.dataset.cupPreset;
+      if (!preset) return;
+
+      if (preset === "clear") {
+        customCupMl = null;
+        if (customCupMlEl) customCupMlEl.value = "";
+      } else {
+        const parsed = parseFloat(preset);
+        if (!Number.isFinite(parsed)) return;
+        customCupMl = clampCustomCupMl(parsed);
+        if (customCupMlEl) customCupMlEl.value = String(roundTo(customCupMl, 0));
+      }
+
+      calculateAndRender({ animate: false });
+      trackEvent("custom_cup_updated", {
+        ...getAnalyticsContext(),
+        custom_cup_preset: preset,
+      });
+    });
   });
 }
 
