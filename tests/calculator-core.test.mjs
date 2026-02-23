@@ -8,7 +8,7 @@ import {
   computeWaterMl,
   getRatioBounds,
   mlToOz,
-  roundTo
+  roundTo,
 } from "../calculator-core.mjs";
 
 test("computeAdjustedRatio baja ratio cuando sube intensidad", () => {

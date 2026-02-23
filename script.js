@@ -4,7 +4,7 @@ const WATER_PER_CUP = {
   v60: 170,
   frenchpress: 180,
   coldbrew: 160,
-  moka: 60
+  moka: 60,
 };
 
 const DEFAULT_BASE_RATIO = {
@@ -13,7 +13,7 @@ const DEFAULT_BASE_RATIO = {
   v60: 17,
   frenchpress: 14,
   coldbrew: 6,
-  moka: 10
+  moka: 10,
 };
 
 const SUGGESTED_RATIO_RANGE = {
@@ -22,7 +22,7 @@ const SUGGESTED_RATIO_RANGE = {
   v60: [16, 18],
   frenchpress: [12, 15],
   coldbrew: [4, 8],
-  moka: [8, 12]
+  moka: [8, 12],
 };
 
 function roundTo(val, decimals = 0) {
@@ -41,12 +41,20 @@ function getRatioBounds(method = "") {
   return { min: 6, max: 25 };
 }
 
-function computeAdjustedRatio(baseRatio, strengthMultiplier, minRatio = 6, maxRatio = 25) {
+function computeAdjustedRatio(
+  baseRatio,
+  strengthMultiplier,
+  minRatio = 6,
+  maxRatio = 25,
+) {
   return clamp(baseRatio / strengthMultiplier, minRatio, maxRatio);
 }
 
 function computeWaterMl(method, cups, cupSizeMl = null) {
-  const size = Number.isFinite(cupSizeMl) && cupSizeMl > 0 ? cupSizeMl : WATER_PER_CUP[method];
+  const size =
+    Number.isFinite(cupSizeMl) && cupSizeMl > 0
+      ? cupSizeMl
+      : WATER_PER_CUP[method];
   return cups * size;
 }
 
@@ -72,7 +80,7 @@ const methodLabels = {
   v60: "V60",
   frenchpress: "Prensa",
   moka: "Moka italiana",
-  coldbrew: "Cold Brew"
+  coldbrew: "Cold Brew",
 };
 
 const grindRecommendations = {
@@ -81,12 +89,13 @@ const grindRecommendations = {
   v60: "Molienda media-fina",
   frenchpress: "Molienda gruesa",
   moka: "Molienda fina-media (tipo sal de mesa, más gruesa que espresso)",
-  coldbrew: "Molienda gruesa"
+  coldbrew: "Molienda gruesa",
 };
 
 const methodHints = {
-  coldbrew: "Cold Brew: esta receta queda concentrada. Puedes diluir 1:2 o 1:3 al servir.",
-  moka: "Moka italiana: no compactes el café y retira del fuego al final del burbujeo."
+  coldbrew:
+    "Cold Brew: esta receta queda concentrada. Puedes diluir 1:2 o 1:3 al servir.",
+  moka: "Moka italiana: no compactes el café y retira del fuego al final del burbujeo.",
 };
 
 const brewGuides = {
@@ -94,38 +103,38 @@ const brewGuides = {
     "Enjuaga el filtro y precalienta el equipo.",
     "Agrega {coffee} g de café molido medio-fino.",
     "Vierte {water} {unit} de agua en 2 etapas.",
-    "Remueve, espera 1:30 y presiona suave."
+    "Remueve, espera 1:30 y presiona suave.",
   ],
   chemex: [
     "Enjuaga el filtro y descarta el agua.",
     "Añade {coffee} g de café molido medio.",
     "Vierte {water} {unit} en círculos durante 3:30-4:00.",
-    "Sirve cuando termine el goteo."
+    "Sirve cuando termine el goteo.",
   ],
   v60: [
     "Enjuaga el filtro y precalienta el servidor.",
     "Añade {coffee} g de café molido medio-fino.",
     "Haz bloom 30-40 s y completa hasta {water} {unit}.",
-    "Tiempo objetivo: 2:30-3:30."
+    "Tiempo objetivo: 2:30-3:30.",
   ],
   frenchpress: [
     "Agrega {coffee} g de café molido grueso.",
     "Vierte {water} {unit} de agua y remueve.",
     "Infusiona 4 minutos y rompe la costra.",
-    "Presiona lentamente y sirve."
+    "Presiona lentamente y sirve.",
   ],
   moka: [
     "Llena la base con agua hasta la válvula.",
     "Añade {coffee} g de café molido fino-medio sin prensar.",
     "Arma la Moka y calienta a fuego medio-bajo.",
-    "Retira cuando el flujo se vuelva claro y sirve."
+    "Retira cuando el flujo se vuelva claro y sirve.",
   ],
   coldbrew: [
     "Añade {coffee} g de café molido grueso.",
     "Incorpora {water} {unit} de agua fría.",
     "Refrigera 12-16 horas.",
-    "Filtra y sirve con hielo o diluye al gusto."
-  ]
+    "Filtra y sirve con hielo o diluye al gusto.",
+  ],
 };
 
 const STORAGE_KEY = "coffeeCalcPrefsV2";
@@ -174,7 +183,7 @@ function trackEvent(eventName, params = {}) {
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
     event: eventName,
-    ...params
+    ...params,
   });
 }
 
@@ -198,7 +207,9 @@ function getAnalyticsContext() {
     ratio: roundTo(ratio, 1),
     cup_size_ml: roundTo(cupSizeMl, 0),
     custom_cup_active: isCustomCupInRange(customCupMl),
-    custom_cup_ml: isCustomCupInRange(customCupMl) ? roundTo(customCupMl, 0) : null
+    custom_cup_ml: isCustomCupInRange(customCupMl)
+      ? roundTo(customCupMl, 0)
+      : null,
   };
 }
 
@@ -223,7 +234,9 @@ function getNumericTextValue(el) {
 }
 
 function animateNumber(el, to, duration = 680) {
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
   if (reduceMotion) {
     el.textContent = roundTo(to, 0);
     return;
@@ -270,7 +283,9 @@ function savePrefs() {
     strength: strengthEl.value,
     unit: unitEl.value,
     baseRatio,
-    customCupMl: Number.isFinite(customCupMl) ? clampCustomCupMl(customCupMl) : null
+    customCupMl: Number.isFinite(customCupMl)
+      ? clampCustomCupMl(customCupMl)
+      : null,
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
 }
@@ -327,7 +342,9 @@ function syncAdvancedInputs() {
   });
 
   if (customCupMlEl) {
-    customCupMlEl.value = Number.isFinite(customCupMl) ? String(roundTo(customCupMl, 0)) : "";
+    customCupMlEl.value = Number.isFinite(customCupMl)
+      ? String(roundTo(customCupMl, 0))
+      : "";
   }
 }
 
@@ -347,7 +364,12 @@ function updateRatioExplainer() {
 
   const strength = parseFloat(strengthEl.value);
   const { min, max } = getBounds(selectedMethod);
-  const ratio = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
+  const ratio = computeAdjustedRatio(
+    baseRatio[selectedMethod],
+    strength,
+    min,
+    max,
+  );
   const waterPerGram = roundTo(ratio, 1);
   const coffeeFor250 = roundTo(250 / ratio, 0);
 
@@ -364,13 +386,13 @@ function formatWaterForDisplay(waterMl) {
   if (unit === "oz") {
     return {
       unit,
-      value: roundTo(mlToOz(waterMl), 1)
+      value: roundTo(mlToOz(waterMl), 1),
     };
   }
 
   return {
     unit: "ml",
-    value: roundTo(waterMl, 0)
+    value: roundTo(waterMl, 0),
   };
 }
 
@@ -383,7 +405,8 @@ function updateCupsHelp() {
   }
 
   if (Number.isFinite(customCupMl)) {
-    cupsHelpEl.textContent = "Ingresa un tamaño entre 40 y 1000 ml para activar el ajuste personal.";
+    cupsHelpEl.textContent =
+      "Ingresa un tamaño entre 40 y 1000 ml para activar el ajuste personal.";
     return;
   }
 
@@ -410,7 +433,7 @@ function renderSteps(coffeeGrams, waterValue, waterUnit) {
     step
       .replace("{coffee}", roundTo(coffeeGrams, 0))
       .replace("{water}", waterValue)
-      .replace("{unit}", waterUnit)
+      .replace("{unit}", waterUnit),
   );
 
   brewStepsEl.textContent = "";
@@ -453,7 +476,12 @@ function calculateAndRender({ animate = true } = {}) {
   const cupSizeMl = getEffectiveCupSizeMl(selectedMethod);
   const water = computeWaterMl(selectedMethod, cups, cupSizeMl);
   const { min, max } = getBounds(selectedMethod);
-  const ratio = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
+  const ratio = computeAdjustedRatio(
+    baseRatio[selectedMethod],
+    strength,
+    min,
+    max,
+  );
   const coffee = computeCoffeeGrams(water, ratio);
 
   const coffeeRounded = roundTo(coffee, 0);
@@ -486,7 +514,7 @@ function calculateAndRender({ animate = true } = {}) {
     water: waterDisplay.value,
     waterUnit: waterDisplay.unit,
     ratio: roundTo(ratio, 1),
-    cups
+    cups,
   };
 }
 
@@ -547,7 +575,7 @@ ratioInputs.forEach((input) => {
     trackEvent("ratio_updated", {
       ...getAnalyticsContext(),
       ratio_method: method,
-      base_ratio: baseRatio[method]
+      base_ratio: baseRatio[method],
     });
   });
 });
@@ -597,8 +625,10 @@ copyBtn.addEventListener("click", async () => {
     `Agua: ${recipe.water} ${recipe.waterUnit}`,
     `Proporción ajustada: 1:${recipe.ratio}`,
     `Molienda sugerida: ${grindRecommendations[selectedMethod]}`,
-    methodHints[selectedMethod] ? `Nota: ${methodHints[selectedMethod]}` : ""
-  ].filter(Boolean).join("\n");
+    methodHints[selectedMethod] ? `Nota: ${methodHints[selectedMethod]}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 
   try {
     await navigator.clipboard.writeText(text);
@@ -632,7 +662,7 @@ toggleAdvancedBtn.addEventListener("click", () => {
   toggleAdvancedBtn.setAttribute("aria-expanded", String(nextOpenState));
   trackEvent("advanced_toggled", {
     ...getAnalyticsContext(),
-    advanced_open: nextOpenState
+    advanced_open: nextOpenState,
   });
 });
 

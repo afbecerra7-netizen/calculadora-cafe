@@ -4,7 +4,7 @@ export const WATER_PER_CUP = {
   v60: 170,
   frenchpress: 180,
   coldbrew: 160,
-  moka: 60
+  moka: 60,
 };
 
 export const DEFAULT_BASE_RATIO = {
@@ -13,7 +13,7 @@ export const DEFAULT_BASE_RATIO = {
   v60: 17,
   frenchpress: 14,
   coldbrew: 6,
-  moka: 10
+  moka: 10,
 };
 
 export const SUGGESTED_RATIO_RANGE = {
@@ -22,7 +22,7 @@ export const SUGGESTED_RATIO_RANGE = {
   v60: [16, 18],
   frenchpress: [12, 15],
   coldbrew: [4, 8],
-  moka: [8, 12]
+  moka: [8, 12],
 };
 
 export function roundTo(val, decimals = 0) {
@@ -41,7 +41,12 @@ export function getRatioBounds(method = "") {
   return { min: 6, max: 25 };
 }
 
-export function computeAdjustedRatio(baseRatio, strengthMultiplier, minRatio = 6, maxRatio = 25) {
+export function computeAdjustedRatio(
+  baseRatio,
+  strengthMultiplier,
+  minRatio = 6,
+  maxRatio = 25,
+) {
   return clamp(baseRatio / strengthMultiplier, minRatio, maxRatio);
 }
 
