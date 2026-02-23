@@ -362,6 +362,14 @@ input[type="number"] {
   color: #65472c;
 }
 
+.advanced-grid .advanced-full {
+  grid-column: 1 / -1;
+}
+
+.advanced-note {
+  margin-top: 0.6rem;
+}
+
 .actions-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

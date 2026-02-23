@@ -282,6 +282,9 @@
       </div>
       <div id="advancedPanel" class="advanced-panel" hidden>
         <div class="advanced-grid">
+          <label class="advanced-full">Tamaño de taza personal (ml)
+            <input id="customCupMl" type="number" min="40" max="1000" step="5" inputmode="numeric" placeholder="Opcional. Ejemplo: 250" />
+          </label>
           <label>AeroPress <input type="number" min="6" max="25" step="0.1" data-ratio-method="aeropress" /></label>
           <label>Chemex <input type="number" min="6" max="25" step="0.1" data-ratio-method="chemex" /></label>
           <label>V60 <input type="number" min="6" max="25" step="0.1" data-ratio-method="v60" /></label>
@@ -289,8 +292,9 @@
           <label>Moka italiana <input type="number" min="6" max="25" step="0.1" data-ratio-method="moka" /></label>
           <label>Cold Brew <input type="number" min="4" max="25" step="0.1" data-ratio-method="coldbrew" /></label>
         </div>
+        <p class="hint advanced-note">Si defines un tamaño (por ejemplo 250 ml), se usa para todas las tazas. Si lo dejas vacío, usamos el volumen sugerido por método.</p>
       </div>
-      <p class="hint">Personaliza la proporción por método. Se guarda en este dispositivo.</p>
+      <p class="hint">Personaliza proporciones y tamaño de taza. Se guarda en este dispositivo.</p>
     </section>
 
     <section class="glass section1 results-panel" id="resultsPanel" aria-labelledby="resultsTitle">

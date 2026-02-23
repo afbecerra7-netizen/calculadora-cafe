@@ -45,8 +45,9 @@ function computeAdjustedRatio(baseRatio, strengthMultiplier, minRatio = 6, maxRa
   return clamp(baseRatio / strengthMultiplier, minRatio, maxRatio);
 }
 
-function computeWaterMl(method, cups) {
-  return cups * WATER_PER_CUP[method];
+function computeWaterMl(method, cups, cupSizeMl = null) {
+  const size = Number.isFinite(cupSizeMl) && cupSizeMl > 0 ? cupSizeMl : WATER_PER_CUP[method];
+  return cups * size;
 }
 
 function computeCoffeeGrams(waterMl, ratio) {
@@ -55,6 +56,10 @@ function computeCoffeeGrams(waterMl, ratio) {
 
 function mlToOz(ml) {
   return ml / 29.5735;
+}
+
+function clampCustomCupMl(value) {
+  return Math.min(Math.max(value, 40), 1000);
 }
 
 const methodLabels = {
@@ -123,10 +128,12 @@ const STORAGE_KEY = "coffeeCalcPrefsV2";
 
 let baseRatio = { ...DEFAULT_BASE_RATIO };
 let selectedMethod = "aeropress";
+let customCupMl = null;
 
 const methodsEl = document.getElementById("methods");
 const cupsEl = document.getElementById("cups");
 const cupsOut = document.getElementById("cupsOut");
+const cupsHelpEl = document.getElementById("cupsHelp");
 const strengthEl = document.getElementById("strength");
 const unitEl = document.getElementById("unit");
 const currentMethodEl = document.getElementById("currentMethod");
@@ -152,6 +159,7 @@ const copyBtn = document.getElementById("copyRecipe");
 const resetBtn = document.getElementById("reset");
 const toggleAdvancedBtn = document.getElementById("toggleAdvanced");
 const advancedPanelEl = document.getElementById("advancedPanel");
+const customCupMlEl = document.getElementById("customCupMl");
 const ratioInputs = document.querySelectorAll("[data-ratio-method]");
 
 function showNotice(message = "", type = "error") {
@@ -213,7 +221,8 @@ function savePrefs() {
     cups: cupsEl.value,
     strength: strengthEl.value,
     unit: unitEl.value,
-    baseRatio
+    baseRatio,
+    customCupMl: Number.isFinite(customCupMl) ? clampCustomCupMl(customCupMl) : null
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
 }
@@ -244,6 +253,11 @@ function loadPrefs() {
     });
     baseRatio = sanitized;
   }
+
+  const parsedCustomCup = parseFloat(prefs.customCupMl);
+  if (Number.isFinite(parsedCustomCup)) {
+    customCupMl = Math.min(Math.max(parsedCustomCup, 40), 1000);
+  }
 }
 
 function syncMethodUI() {
@@ -263,6 +277,14 @@ function syncAdvancedInputs() {
     input.max = String(max);
     input.value = baseRatio[method];
   });
+
+  if (customCupMlEl) {
+    customCupMlEl.value = Number.isFinite(customCupMl) ? String(roundTo(customCupMl, 0)) : "";
+  }
+}
+
+function getEffectiveCupSizeMl(method) {
+  return Number.isFinite(customCupMl) ? clampCustomCupMl(customCupMl) : WATER_PER_CUP[method];
 }
 
 function updateRatioPreview() {
@@ -302,6 +324,17 @@ function formatWaterForDisplay(waterMl) {
     unit: "ml",
     value: roundTo(waterMl, 0)
   };
+}
+
+function updateCupsHelp() {
+  if (!cupsHelpEl) return;
+
+  if (Number.isFinite(customCupMl)) {
+    cupsHelpEl.textContent = `Usando ${roundTo(getEffectiveCupSizeMl(selectedMethod), 0)} ml por taza (ajuste personal activo).`;
+    return;
+  }
+
+  cupsHelpEl.textContent = `Volumen sugerido para ${methodLabels[selectedMethod]}: ${WATER_PER_CUP[selectedMethod]} ml por taza.`;
 }
 
 function updateRatioRange() {
@@ -364,7 +397,8 @@ function calculateAndRender({ animate = true } = {}) {
 
   showNotice("");
 
-  const water = computeWaterMl(selectedMethod, cups);
+  const cupSizeMl = getEffectiveCupSizeMl(selectedMethod);
+  const water = computeWaterMl(selectedMethod, cups, cupSizeMl);
   const { min, max } = getBounds(selectedMethod);
   const ratio = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
   const coffee = computeCoffeeGrams(water, ratio);
@@ -382,10 +416,11 @@ function calculateAndRender({ animate = true } = {}) {
 
   waterUnitEl.textContent = waterDisplay.unit;
   updateQuickSummary(coffeeRounded, waterDisplay.value, waterDisplay.unit);
-  metaEl.textContent = `Método: ${methodLabels[selectedMethod]} · Base 1:${baseRatio[selectedMethod]} · Ajustada 1:${roundTo(ratio, 1)} · Intensidad: ${strengthLabel} (x${strength})`;
+  metaEl.textContent = `Método: ${methodLabels[selectedMethod]} · Taza: ${roundTo(cupSizeMl, 0)} ml${Number.isFinite(customCupMl) ? " (personal)" : ""} · Base 1:${baseRatio[selectedMethod]} · Ajustada 1:${roundTo(ratio, 1)} · Intensidad: ${strengthLabel}`;
 
   updateRatioPreview();
   updateRatioExplainer();
+  updateCupsHelp();
   updateRatioRange();
   updateGrindHint();
   updateMethodHint();
@@ -443,6 +478,37 @@ ratioInputs.forEach((input) => {
   });
 });
 
+if (customCupMlEl) {
+  customCupMlEl.addEventListener("input", () => {
+    const raw = customCupMlEl.value.trim();
+    if (!raw) {
+      customCupMl = null;
+      calculateAndRender({ animate: false });
+      return;
+    }
+
+    const parsed = parseFloat(raw);
+    if (!Number.isFinite(parsed)) return;
+    customCupMl = parsed;
+    calculateAndRender({ animate: false });
+  });
+
+  customCupMlEl.addEventListener("change", () => {
+    const raw = customCupMlEl.value.trim();
+    if (!raw) {
+      customCupMl = null;
+      calculateAndRender({ animate: false });
+      return;
+    }
+
+    const parsed = parseFloat(raw);
+    if (!Number.isFinite(parsed)) return;
+    customCupMl = clampCustomCupMl(parsed);
+    customCupMlEl.value = String(roundTo(customCupMl, 0));
+    calculateAndRender({ animate: false });
+  });
+}
+
 copyBtn.addEventListener("click", async () => {
   const recipe = calculateAndRender({ animate: false });
   if (!recipe) return;
@@ -450,6 +516,7 @@ copyBtn.addEventListener("click", async () => {
   const text = [
     `Receta de café (${recipe.method})`,
     `Tazas: ${recipe.cups}`,
+    `Volumen por taza: ${roundTo(getEffectiveCupSizeMl(selectedMethod), 0)} ml${Number.isFinite(customCupMl) ? " (personal)" : ""}`,
     `Café: ${recipe.coffee} g`,
     `Agua: ${recipe.water} ${recipe.waterUnit}`,
     `Proporción ajustada: 1:${recipe.ratio}`,
@@ -473,6 +540,7 @@ resetBtn.addEventListener("click", () => {
   cupsOut.textContent = "1";
   strengthEl.value = "1";
   unitEl.value = "ml";
+  customCupMl = null;
   syncMethodUI();
   syncAdvancedInputs();
   calculateAndRender({ animate: false });
