@@ -165,6 +165,50 @@ const toggleAdvancedBtn = document.getElementById("toggleAdvanced");
 const advancedPanelEl = document.getElementById("advancedPanel");
 const customCupMlEl = document.getElementById("customCupMl");
 const ratioInputs = document.querySelectorAll("[data-ratio-method]");
+const ANALYTICS_DEBOUNCE_MS = 280;
+
+let cupsTrackTimeoutId = null;
+
+function trackEvent(eventName, params = {}) {
+  if (typeof window === "undefined") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...params
+  });
+}
+
+function getAnalyticsContext() {
+  const method = selectedMethod;
+  const methodLabel = methodLabels[method] || "";
+  const cups = parseInt(cupsEl.value, 10);
+  const strength = parseFloat(strengthEl.value);
+  const unit = unitEl.value;
+  const cupSizeMl = getEffectiveCupSizeMl(method);
+  const { min, max } = getBounds(method);
+  const ratio = computeAdjustedRatio(baseRatio[method], strength, min, max);
+
+  return {
+    method,
+    method_label: methodLabel,
+    cups: Number.isFinite(cups) ? cups : null,
+    strength: Number.isFinite(strength) ? strength : null,
+    strength_label: getStrengthLabel(),
+    unit,
+    ratio: roundTo(ratio, 1),
+    cup_size_ml: roundTo(cupSizeMl, 0),
+    custom_cup_active: isCustomCupInRange(customCupMl),
+    custom_cup_ml: isCustomCupInRange(customCupMl) ? roundTo(customCupMl, 0) : null
+  };
+}
+
+function scheduleTrackCupsChanged() {
+  if (cupsTrackTimeoutId) clearTimeout(cupsTrackTimeoutId);
+  cupsTrackTimeoutId = setTimeout(() => {
+    trackEvent("cups_changed", getAnalyticsContext());
+    cupsTrackTimeoutId = null;
+  }, ANALYTICS_DEBOUNCE_MS);
+}
 
 function showNotice(message = "", type = "error") {
   errorMsgEl.classList.toggle("is-success", type === "success");
@@ -448,9 +492,13 @@ function calculateAndRender({ animate = true } = {}) {
 
 function onMethodSelect(method) {
   if (!method || !methodLabels[method]) return;
+  const changedMethod = method !== selectedMethod;
   selectedMethod = method;
   syncMethodUI();
   calculateAndRender({ animate: false });
+  if (changedMethod) {
+    trackEvent("method_selected", getAnalyticsContext());
+  }
 }
 
 methodsEl.addEventListener("click", (e) => {
@@ -470,10 +518,18 @@ methodsEl.addEventListener("keydown", (e) => {
 cupsEl.addEventListener("input", () => {
   cupsOut.textContent = cupsEl.value;
   calculateAndRender({ animate: false });
+  scheduleTrackCupsChanged();
 });
 
-strengthEl.addEventListener("change", () => calculateAndRender({ animate: false }));
-unitEl.addEventListener("change", () => calculateAndRender({ animate: false }));
+strengthEl.addEventListener("change", () => {
+  calculateAndRender({ animate: false });
+  trackEvent("strength_changed", getAnalyticsContext());
+});
+
+unitEl.addEventListener("change", () => {
+  calculateAndRender({ animate: false });
+  trackEvent("unit_changed", getAnalyticsContext());
+});
 
 ratioInputs.forEach((input) => {
   input.addEventListener("input", () => {
@@ -484,6 +540,15 @@ ratioInputs.forEach((input) => {
     baseRatio[method] = Math.min(Math.max(val, min), max);
     input.value = baseRatio[method];
     calculateAndRender({ animate: false });
+  });
+
+  input.addEventListener("change", () => {
+    const method = input.dataset.ratioMethod;
+    trackEvent("ratio_updated", {
+      ...getAnalyticsContext(),
+      ratio_method: method,
+      base_ratio: baseRatio[method]
+    });
   });
 });
 
@@ -507,6 +572,7 @@ if (customCupMlEl) {
     if (!raw) {
       customCupMl = null;
       calculateAndRender({ animate: false });
+      trackEvent("custom_cup_updated", getAnalyticsContext());
       return;
     }
 
@@ -515,6 +581,7 @@ if (customCupMlEl) {
     customCupMl = clampCustomCupMl(parsed);
     customCupMlEl.value = String(roundTo(customCupMl, 0));
     calculateAndRender({ animate: false });
+    trackEvent("custom_cup_updated", getAnalyticsContext());
   });
 }
 
@@ -536,6 +603,7 @@ copyBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(text);
     showNotice("Receta copiada.", "success");
+    trackEvent("recipe_copied", getAnalyticsContext());
   } catch {
     showNotice("No se pudo copiar. Inténtalo de nuevo.");
   }
@@ -554,17 +622,24 @@ resetBtn.addEventListener("click", () => {
   syncAdvancedInputs();
   calculateAndRender({ animate: false });
   showNotice("");
+  trackEvent("recipe_reset", getAnalyticsContext());
 });
 
 toggleAdvancedBtn.addEventListener("click", () => {
   const isOpen = !advancedPanelEl.hidden;
   advancedPanelEl.hidden = isOpen;
-  toggleAdvancedBtn.setAttribute("aria-expanded", String(!isOpen));
+  const nextOpenState = !isOpen;
+  toggleAdvancedBtn.setAttribute("aria-expanded", String(nextOpenState));
+  trackEvent("advanced_toggled", {
+    ...getAnalyticsContext(),
+    advanced_open: nextOpenState
+  });
 });
 
 if (jumpToResultsBtn && resultsPanelEl) {
   jumpToResultsBtn.addEventListener("click", () => {
     resultsPanelEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    trackEvent("quick_summary_clicked", getAnalyticsContext());
   });
 }
 
