@@ -175,16 +175,48 @@ const advancedPanelEl = document.getElementById("advancedPanel");
 const customCupMlEl = document.getElementById("customCupMl");
 const ratioInputs = document.querySelectorAll("[data-ratio-method]");
 const ANALYTICS_DEBOUNCE_MS = 280;
+const ANALYTICS_DEBUG_STORAGE_KEY = "coffeeAnalyticsDebug";
 
 let cupsTrackTimeoutId = null;
 
+function isAnalyticsDebugMode() {
+  if (typeof window === "undefined") return false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const queryValue = params.get("debug_analytics") || params.get("ga_debug");
+
+    if (queryValue === "1" || queryValue === "true") {
+      localStorage.setItem(ANALYTICS_DEBUG_STORAGE_KEY, "1");
+      return true;
+    }
+
+    if (queryValue === "0" || queryValue === "false") {
+      localStorage.removeItem(ANALYTICS_DEBUG_STORAGE_KEY);
+      return false;
+    }
+
+    return localStorage.getItem(ANALYTICS_DEBUG_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
 function trackEvent(eventName, params = {}) {
   if (typeof window === "undefined") return;
+  const eventParams = { ...params };
+
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
     event: eventName,
-    ...params,
+    ...eventParams,
   });
+
+  if (typeof window.gtag === "function") {
+    const gtagParams = isAnalyticsDebugMode()
+      ? { ...eventParams, debug_mode: true }
+      : eventParams;
+    window.gtag("event", eventName, gtagParams);
+  }
 }
 
 function getAnalyticsContext() {
@@ -678,3 +710,4 @@ cupsOut.textContent = cupsEl.value;
 syncMethodUI();
 syncAdvancedInputs();
 calculateAndRender({ animate: false });
+trackEvent("app_loaded", getAnalyticsContext());
