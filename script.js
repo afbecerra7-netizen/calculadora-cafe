@@ -137,6 +137,7 @@ const waterMlEl = document.getElementById("waterMl");
 const waterUnitEl = document.getElementById("waterUnit");
 const metaEl = document.getElementById("meta");
 const ratioPreviewEl = document.getElementById("ratioPreview");
+const ratioExplainerEl = document.getElementById("ratioExplainer");
 const ratioRangeEl = document.getElementById("ratioRange");
 const grindHintEl = document.getElementById("grindHint");
 const methodHintEl = document.getElementById("methodHint");
@@ -268,7 +269,19 @@ function updateRatioPreview() {
   const strength = parseFloat(strengthEl.value);
   const { min, max } = getBounds(selectedMethod);
   const r = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
-  ratioPreviewEl.textContent = `Proporción: 1:${roundTo(r, 1)}`;
+  ratioPreviewEl.textContent = `Proporción actual: 1:${roundTo(r, 1)}`;
+}
+
+function updateRatioExplainer() {
+  if (!ratioExplainerEl) return;
+
+  const strength = parseFloat(strengthEl.value);
+  const { min, max } = getBounds(selectedMethod);
+  const ratio = computeAdjustedRatio(baseRatio[selectedMethod], strength, min, max);
+  const waterPerGram = roundTo(ratio, 1);
+  const coffeeFor250 = roundTo(250 / ratio, 0);
+
+  ratioExplainerEl.textContent = `Tu ajuste usa 1:${waterPerGram}. Eso significa ${waterPerGram} ml de agua por cada 1 g de café (aprox. ${coffeeFor250} g para 250 ml).`;
 }
 
 function getStrengthLabel() {
@@ -293,7 +306,7 @@ function formatWaterForDisplay(waterMl) {
 
 function updateRatioRange() {
   const [min, max] = SUGGESTED_RATIO_RANGE[selectedMethod];
-  ratioRangeEl.textContent = `Proporción sugerida para ${methodLabels[selectedMethod]}: 1:${min} a 1:${max}`;
+  ratioRangeEl.textContent = `Rango recomendado para ${methodLabels[selectedMethod]}: 1:${min} a 1:${max}.`;
 }
 
 function updateGrindHint() {
@@ -372,6 +385,7 @@ function calculateAndRender({ animate = true } = {}) {
   metaEl.textContent = `Método: ${methodLabels[selectedMethod]} · Base 1:${baseRatio[selectedMethod]} · Ajustada 1:${roundTo(ratio, 1)} · Intensidad: ${strengthLabel} (x${strength})`;
 
   updateRatioPreview();
+  updateRatioExplainer();
   updateRatioRange();
   updateGrindHint();
   updateMethodHint();

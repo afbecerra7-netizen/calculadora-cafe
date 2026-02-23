@@ -320,6 +320,15 @@ input[type="number"] {
   white-space: nowrap;
 }
 
+.ratio-explainer {
+  margin-top: 0.62rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.72), rgba(255, 241, 220, 0.55));
+  color: #614529;
+}
+
 .advanced-header {
   display: flex;
   align-items: center;
